@@ -21,8 +21,8 @@ module.exports = async (req, res) => {
         }`
 
     try {
-        const { data } = await axios.post(process.env.GRAPHQL_ENDPOINT, 
-            { 
+        const { data } = await axios.post(process.env.GRAPHQL_ENDPOINT,
+            {
                 query,
                 variables: {
                     slug
@@ -32,19 +32,19 @@ module.exports = async (req, res) => {
                 headers: {
                     'Content-Type': 'application/json',
                 }
-            });   
-            
+            });
+
         quizData = data.data.quizBySlug
 
         console.log(quizData)
 
-        quizData.questions = quizData.questions.sort((a,b) => a-b)
+        quizData.questions = quizData.questions.sort((a, b) => a - b)
 
         console.log(quizData)
         res.render('quiz', { user: req.verifiedUser.user, quiz: quizData });
-    } catch(e) {
+    } catch (e) {
         console.log(e)
         res.redirect('/')
-    }   
+    }
 
 }

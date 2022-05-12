@@ -32,24 +32,24 @@ const QuestionType = new GraphQLObjectType({
         id: { type: GraphQLID },
         title: { type: GraphQLString },
         correctAnswer: { type: GraphQLString },
-        quizID: { type: GraphQLString }, 
-        order: { type: GraphQLInt }, 
-        quiz: { 
+        quizId: { type: GraphQLString },
+        order: { type: GraphQLInt },
+        quiz: {
             type: QuizType,
-            resolve(parent,args){
+            resolve(parent, args) {
                 return User.findById(parent.quizId)
             }
-        } 
+        }
     })
 })
 
 const QuestionInputType = new GraphQLInputObjectType({
     name: 'QuestionInput',
-    description: 'Question input type', 
+    description: 'Question input type',
     fields: () => ({
-        title: {type: GraphQLString },
-        order: {type: GraphQLInt },
-        correctAnswer: {type: GraphQLString },
+        title: { type: GraphQLString },
+        order: { type: GraphQLInt },
+        correctAnswer: { type: GraphQLString }
     })
 })
 
