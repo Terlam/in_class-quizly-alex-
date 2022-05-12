@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
         })
         submissionId = data.data.submitQuiz
     } catch(e) {
-        console.log(e)
+        e.response.data.errors.forEach(error => console.log(error))
     }   
 
     res.redirect(`/quiz/results/${submissionId}`)

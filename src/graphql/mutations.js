@@ -142,7 +142,7 @@ const submitQuiz = {
             return submission.id
         }
         catch(e) {
-            console.log(e)
+            e.response.data.errors.forEach(error => console.log(error))
             return ''
         }
     }
