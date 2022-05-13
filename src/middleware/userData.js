@@ -30,8 +30,12 @@ const userData = async (req, res, next) => {
                 submissions {
                     id,
                     userId,
-    
-                    avgScore
+                    quizId,
+                    quiz{
+                        title,
+                        description
+                    },
+                    score
                 }
             } 
         }`

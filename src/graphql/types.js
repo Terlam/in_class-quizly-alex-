@@ -11,15 +11,15 @@ const UserType = new GraphQLObjectType({
         username: { type: GraphQLString },
         email: { type: GraphQLString },
         quizzes: {
-            type: GraphQLList(QuizType), 
+            type:  new GraphQLList(QuizType), 
             resolve(parent, args) {
                 return Quiz.find({userID: parent.id}) // Search through quiz model & look for user ID that matches the user's id (bring back all quizzes)
             }
         },
         submissions: {
-            type: GraphQLList(QuizType), 
+            type: new GraphQLList(SubmissionType), 
             resolve(parent, args) {
-                return Submissions.find({userID: parent.id}) 
+                return Submission.find({userId: parent.id}) 
             }
         }
     })
@@ -78,13 +78,13 @@ const QuizType = new GraphQLObjectType({
             }
         },
         questions: { 
-            type: GraphQLList(QuestionType),
+            type: new GraphQLList(QuestionType),
             resolve(parent, args) {
                 return Question.find({ quizId: parent.id })
             }
         },
         submissions: {
-            type: GraphQLList(SubmissionType),
+            type: new GraphQLList(SubmissionType),
             resolve(parent, args) {
                 return Submission.find({ quizId: parent.id })
             }
@@ -92,15 +92,17 @@ const QuizType = new GraphQLObjectType({
         avgScore: {
             type: GraphQLFloat,
             async resolve(parent, args) {
-                const submissions = await Submission.find({ quizId: parent.id })
+                const submissionList = await Submission.find({ quizId: parent.id })
                 let score = 0
 
-                console.log(submissions)
-                for (const submission of submissions) {
-                    score += submission.score
+                console.log(submissionList)
+                for (const submission of submissionList) {
+                        
+                        score += submission.score
                 }
-
-                return score / submissions.length
+                console.log(score,typeof(score), "👈🏾 score")
+                 console.log(submissionList.length,"length of list")
+                return (score / submissionList.length) || 0 // because you can't divide anything by zero (incase your submissionList is empty)
             }
         }
     })

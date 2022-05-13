@@ -42,6 +42,13 @@ const submissionById = {
         return Submission.findById(args.id)
     }
 }
+const submissionList = {
+    type: new GraphQLList(SubmissionType),
+    description: 'Query for all quiz submission',
+    resolve(parent, args) {
+        return Submission.find()
+    }
+}
 
-module.exports = { users, user, quizBySlug, submissionById }
+module.exports = { users, user, quizBySlug, submissionById, submissionList }
 
